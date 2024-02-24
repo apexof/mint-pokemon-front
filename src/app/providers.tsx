@@ -26,7 +26,7 @@ const connectors = connectorsForWallets(wallets);
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient,
+      publicClient,
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {

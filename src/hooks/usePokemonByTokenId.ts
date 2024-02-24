@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTokenURIByTokenId } from "./useTokenURIByTokenId";
 import { usePokemonByTokenURI } from "./usePokemonByTokenURI";
 
-export const usePokemonByTokenId = (tokenId?: `0x${string}` | number) => {
+export const usePokemonByTokenId = (tokenId?: number) => {
   const { tokenURILoading, tokenURIError, tokenURI } =
     useTokenURIByTokenId(tokenId);
 

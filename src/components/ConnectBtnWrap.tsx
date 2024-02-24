@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Chain, useSwitchNetwork } from "wagmi";
-import { Button, ButtonProps } from "./Button";
+import { Button, ButtonProps } from "./Button/Button";
 
 type Props = ButtonProps & {
   targetChain: Chain;
