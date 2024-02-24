@@ -10,6 +10,8 @@ export const useMint = () => {
 
   const mint = useCallback(async () => {
     setTxHashLoading(true);
+    setTxHashError(undefined);
+    setTxHash(undefined);
     try {
       const config = await prepareWriteContract({
         address: pokemonFactory.address,
@@ -30,17 +32,10 @@ export const useMint = () => {
     }
   }, []);
 
-  // wait tx
-  const {
-    data: tx,
-    error: txError,
-    isLoading: txLoading,
-  } = useWaitForTransaction({ hash: txHash });
-
   return {
-    mintLoading: txLoading || txHashLoading,
-    mintError: txError?.message || txHashError,
+    txHashLoading,
+    txHashError,
     mint,
-    mintTx: tx,
+    txHash,
   };
 };

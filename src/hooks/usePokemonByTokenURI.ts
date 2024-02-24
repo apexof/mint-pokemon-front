@@ -10,6 +10,9 @@ export const usePokemonByTokenURI = (tokenURI?: string) => {
     if (!tokenURI) {
       return;
     }
+    setPokemonError(undefined);
+    setPokemon(undefined);
+    setPokemonLoading(true);
     fetch(tokenURI)
       .then(async (resJson) => {
         if (resJson.status !== 200) {

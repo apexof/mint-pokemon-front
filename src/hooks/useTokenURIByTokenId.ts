@@ -11,6 +11,8 @@ export const useTokenURIByTokenId = (tokenId?: `0x${string}` | number) => {
     if (!tokenId) {
       return;
     }
+    setTokenURIError(undefined);
+    setTokenURI(undefined);
     setTokenURILoading(true);
 
     const bigTokenId = BigInt(tokenId);
