@@ -1,7 +1,8 @@
 import './globals.css'
-import { Web3Provider } from './providers'
 import { FC, PropsWithChildren } from 'react'
 import { Header } from '@/components/Header/Header'
+import s from './layout.module.scss'
+import { Web3Provider } from './providers/Web3Provider'
 
 const RootLayout: FC<PropsWithChildren> = (props) => {
   const { children } = props
@@ -10,8 +11,10 @@ const RootLayout: FC<PropsWithChildren> = (props) => {
     <html lang="en">
       <body>
         <Web3Provider>
-          <Header />
-          {children}
+          <div className={s.pageContainer}>
+            <Header />
+            {children}
+          </div>
         </Web3Provider>
       </body>
     </html>
