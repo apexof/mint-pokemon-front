@@ -21,7 +21,7 @@ export const Web3Provider: FC<PropsWithChildren> = (props) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>{props.children}</RainbowKitProvider>
+        <RainbowKitProvider locale="en">{props.children}</RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
