@@ -1,29 +1,20 @@
 import { FC, MouseEventHandler } from 'react'
 
-import errorIcon from '#assets/icons/check-circle-error.svg'
-import metamaskIcon from '#assets/icons/metamask.svg'
-// import { message } from 'antd'
-import { useTranslation } from 'react-i18next'
-
-// import { Hint } from '../Hint/Hint'
-
-import s from './addToMetaMask.module.scss'
+import metamaskIcon from '../assets/metamask.svg'
+import Image from 'next/image'
+import s from './addToMetamask.module.scss'
 
 type Props = {
-  address?: string
+  address: string
   className?: string
-  decimals?: number
-  hint?: boolean
-  image?: string
-  symbol?: string
+  tokenId?: string
 }
 
 export const AddToMetaMask: FC<Props> = (props) => {
-  const { address, className, decimals, hint, image, symbol } = props
-  // const [messageApi, contextHolder] = message.useMessage()
+  const { tokenId, address, className } = props
 
-  if (!symbol || !address || !decimals) {
-    return <img alt="" className={className} src={metamaskIcon} />
+  if (!tokenId) {
+    return null
   }
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -34,33 +25,25 @@ export const AddToMetaMask: FC<Props> = (props) => {
         .request({
           method: 'wallet_watchAsset',
           params: {
+            type: 'ERC1155',
             options: {
               address,
-              decimals,
-              image,
-              symbol,
+              tokenId,
             },
-            type: 'ERC20',
           },
         })
         .catch(console.error)
     } else {
-      // messageApi.open({
-      //   content: t('metamaskNotFound'),
-      //   icon: <img alt="" src={errorIcon} />,
-      //   type: 'error',
-      // })
+      alert('Metamask Not Found')
     }
   }
 
   return (
     <>
-      {/* {contextHolder} */}
-      {/* <Hint text={hint ? t('addToMetamask') : null}> */}
-      <button className={s.addToMetaMaskBtn} onClick={handleClick}>
-        <img alt="" className={className} src={metamaskIcon} />
+      <button className={s.addToMetamask} onClick={handleClick}>
+        <Image width={35} src={metamaskIcon} alt="" />
+        Add to Metamask
       </button>
-      {/* </Hint> */}
     </>
   )
 }
