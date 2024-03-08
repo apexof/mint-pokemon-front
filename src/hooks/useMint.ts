@@ -16,7 +16,7 @@ export const useMint = () => {
       const config = await prepareWriteContract({
         address: pokemonFactory.address,
         abi: pokemonFactory.abi,
-        functionName: "safeMint",
+        functionName: "mint",
         args: ["0xf00819804a51065D17f5e2EA4b2ffd8df4FB9fe8"],
       });
       const newTx = await writeContract<typeof pokemonFactory.abi, "safeMint">(

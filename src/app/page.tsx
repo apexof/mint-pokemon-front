@@ -6,14 +6,14 @@ import Image from "next/image";
 import loaderIcon from "@/assets/loader.svg";
 import { Button } from "@/components/Button/Button";
 import { ConnectBtnWrap } from "@/components/ConnectBtnWrap";
-import { sepolia, useWaitForTransaction } from "wagmi";
+import { sepolia, useChainId, useWaitForTransaction } from "wagmi";
 import unknownPokemonImg from "@/assets/unknownPokemon.png";
 import { pokemonFactory } from "@/constants/abi/pokemonFactory";
 import s from "./home.module.scss";
 
 function Home() {
   const { txHashError, mint, txHashLoading, txHash } = useMint();
-
+  const chainId = useChainId()
   // wait tx
   const {
     data: mintTx,
@@ -21,18 +21,15 @@ function Home() {
     isLoading: mintLoading,
   } = useWaitForTransaction({
     hash: txHash,
-    chainId: sepolia.id,
+    chainId, 
   });
-
-  const tokenIdHash = mintTx?.logs[0].topics[3];
+  const data = mintTx?.logs[0].data;
+  const tokenIdHash = data?.slice(2, 66);
   const tokenId = tokenIdHash ? parseInt(tokenIdHash, 16) : undefined;
-
-  const { pokemonLoading, pokemonError, pokemon } =
-    usePokemonByTokenId(tokenId);
+  const { pokemonLoading, pokemonError, pokemon } = usePokemonByTokenId(tokenId);
 
   const isLoading = mintLoading || pokemonLoading || txHashLoading;
   const error = mintError?.message || pokemonError || txHashError;
-  console.log("pokemon", pokemon);
   return (
     <main className={s.homePage}>
       {isLoading ? 

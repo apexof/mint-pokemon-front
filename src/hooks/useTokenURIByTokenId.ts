@@ -20,7 +20,7 @@ export const useTokenURIByTokenId = (tokenId?: `0x${string}` | number) => {
     readContract({
       address: pokemonFactory.address,
       abi: pokemonFactory.abi,
-      functionName: "tokenURI",
+      functionName: "uri",
       args: [bigTokenId],
     })
       .then((result) => {
