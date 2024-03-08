@@ -88,14 +88,8 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": [0],
     "react/no-array-index-key": "off",
-    "react/jsx-filename-extension": [
-      1,
-      { "extensions": [".js", ".jsx", "ts", "tsx"] }
-    ],
-    "react/jsx-curly-brace-presence": [
-      "error",
-      { "props": "never", "children": "never" }
-    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", "ts", "tsx"] }],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
     "react/button-has-type": [0],
     "react/require-default-props": [0],
     "react/jsx-props-no-spreading": "off",
@@ -125,15 +119,7 @@
     "perfectionist/sort-imports": [
       "error",
       {
-        "groups": [
-          "react",
-          "external",
-          "main",
-          "internal",
-          "type",
-          "parent",
-          "style"
-        ],
+        "groups": ["react", "external", "main", "internal", "type", "parent", "style"],
         "custom-groups": {
           "value": {
             "react": ["react", "react-dom/**"]
@@ -142,15 +128,7 @@
             "react": "react"
           }
         },
-        "internal-pattern": [
-          "app",
-          "containers/**",
-          "pages/**",
-          "components/**",
-          "store/**",
-          "utils/**",
-          "routes"
-        ]
+        "internal-pattern": ["app", "containers/**", "pages/**", "components/**", "store/**", "utils/**", "routes"]
       }
     ],
     "perfectionist/sort-enums": "off"

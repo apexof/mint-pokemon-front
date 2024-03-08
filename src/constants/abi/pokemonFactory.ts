@@ -1,5 +1,4 @@
 export const pokemonFactory = {
-  address: '0x53963f3da917dFD4eF654B7Ace7Cef88753ae3A6',
   abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
@@ -221,4 +220,5 @@ export const pokemonFactory = {
       type: 'function',
     },
   ],
+  address: '0x53963f3da917dFD4eF654B7Ace7Cef88753ae3A6',
 } as const

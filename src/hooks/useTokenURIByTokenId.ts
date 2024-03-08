@@ -20,5 +20,5 @@ export const useTokenURIByTokenId = (tokenId?: number) => {
     },
   })
 
-  return { tokenURI, tokenURILoading, tokenURIError: tokenURIError?.message }
+  return { tokenURI, tokenURIError: tokenURIError?.message, tokenURILoading }
 }

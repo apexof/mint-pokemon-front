@@ -1,14 +1,14 @@
-import { useTokenURIByTokenId } from './useTokenURIByTokenId'
 import { usePokemonByTokenURI } from './usePokemonByTokenURI'
+import { useTokenURIByTokenId } from './useTokenURIByTokenId'
 
 export const usePokemonByTokenId = (tokenId?: number) => {
-  const { tokenURILoading, tokenURIError, tokenURI } = useTokenURIByTokenId(tokenId)
+  const { tokenURI, tokenURIError, tokenURILoading } = useTokenURIByTokenId(tokenId)
 
-  const { pokemonLoading, pokemonError, pokemon } = usePokemonByTokenURI(tokenURI)
+  const { pokemon, pokemonError, pokemonLoading } = usePokemonByTokenURI(tokenURI)
 
   return {
-    pokemonLoading: tokenURILoading || pokemonLoading,
-    pokemonError: tokenURIError || pokemonError,
     pokemon,
+    pokemonError: tokenURIError || pokemonError,
+    pokemonLoading: tokenURILoading || pokemonLoading,
   }
 }

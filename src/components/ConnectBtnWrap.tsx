@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Button, ButtonProps } from './Button/Button'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Chain } from 'viem'
 import { useSwitchChain } from 'wagmi'
 

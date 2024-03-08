@@ -1,11 +1,7 @@
-import React, { FC } from "react";
+import { FC } from 'react'
 
-type Props = { qwe?: string };
+const Collection: FC = () => {
+  return <div>Collection</div>
+}
 
-const Collection: FC<Props> = (props) => {
-  const { qwe } = props;
-
-  return <div>Collection</div>;
-};
-
-export default Collection;
+export default Collection

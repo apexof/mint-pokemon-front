@@ -1,20 +1,21 @@
 'use client'
 
-import { usePokemonByTokenId } from '@/hooks/usePokemonByTokenId'
-import { useMint } from '@/hooks/useMint'
-import Image from 'next/image'
 import loaderIcon from '@/assets/loader.svg'
+import unknownPokemonImg from '@/assets/unknownPokemon.png'
 import { Button } from '@/components/Button/Button'
 import { ConnectBtnWrap } from '@/components/ConnectBtnWrap'
-import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
-import unknownPokemonImg from '@/assets/unknownPokemon.png'
 import { pokemonFactory } from '@/constants/abi/pokemonFactory'
-import s from './home.module.scss'
-import { sepolia } from 'viem/chains'
 import { AddToMetaMask } from '@/features/AddToMetamask'
+import { useMint } from '@/hooks/useMint'
+import { usePokemonByTokenId } from '@/hooks/usePokemonByTokenId'
+import Image from 'next/image'
+import { sepolia } from 'viem/chains'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
+
+import s from './home.module.scss'
 
 function Home() {
-  const { txHashError, mint, txHashLoading, txHash } = useMint()
+  const { mint, txHash, txHashError, txHashLoading } = useMint()
   const { chainId } = useAccount()
   // wait tx
   const {
@@ -22,27 +23,28 @@ function Home() {
     error: mintError,
     isLoading: mintLoading,
   } = useWaitForTransactionReceipt({
-    hash: txHash,
     chainId,
+    hash: txHash,
   })
   const data = mintTx?.logs[0].data
   const tokenIdHash = data?.slice(2, 66)
   const tokenId = tokenIdHash ? parseInt(tokenIdHash, 16) : undefined
-  const { pokemonLoading, pokemonError, pokemon } = usePokemonByTokenId(tokenId)
+  const { pokemon, pokemonError, pokemonLoading } = usePokemonByTokenId(tokenId)
 
   const isLoading = mintLoading || pokemonLoading || txHashLoading
   const error = mintError?.message || pokemonError || txHashError
+
   return (
     <main className={s.homePage}>
       {isLoading ? (
-        <Image width={275} height={275} src={loaderIcon} alt="" />
+        <Image alt="" height={275} src={loaderIcon} width={275} />
       ) : pokemon ? (
         <>
           <p className={s.name}>{pokemon.name}</p>
-          <Image width={475} height={475} src={pokemon.image} alt="" />
+          <Image alt="" height={475} src={pokemon.image} width={475} />
         </>
       ) : (
-        <Image width={700} src={unknownPokemonImg} alt="" />
+        <Image alt="" src={unknownPokemonImg} width={700} />
       )}
       {txHashLoading ? (
         <p className={s.text}>Proceed In Your Wallet</p>
@@ -54,12 +56,13 @@ function Home() {
         <>
           <a
             className={s.text}
-            target="_blank"
             href={`https://testnets.opensea.io/assets/sepolia/${pokemonFactory.address}/${tokenId}`}
+            rel="noreferrer"
+            target="_blank"
           >
             View on OpenSea
           </a>
-          <AddToMetaMask tokenId={tokenId?.toString()} address={pokemonFactory.address} />
+          <AddToMetaMask address={pokemonFactory.address} tokenId={tokenId?.toString()} />
         </>
       ) : (
         <p className={s.text}>Mint free Pokemon NFT!</p>

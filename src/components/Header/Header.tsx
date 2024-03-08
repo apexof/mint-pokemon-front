@@ -1,7 +1,9 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Link from "next/link";
-import React, { FC } from "react";
-import s from "./header.module.scss";
+import { FC } from 'react'
+
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Link from 'next/link'
+
+import s from './header.module.scss'
 
 export const Header: FC = () => {
   return (
@@ -9,7 +11,7 @@ export const Header: FC = () => {
       <nav>
         <ul className="flex items-center gap-6">
           <li>
-            <Link href="/" className={s.link}>
+            <Link className={s.link} href="/">
               Mint
             </Link>
           </li>
@@ -22,5 +24,5 @@ export const Header: FC = () => {
       </nav>
       <ConnectButton />
     </div>
-  );
-};
+  )
+}
