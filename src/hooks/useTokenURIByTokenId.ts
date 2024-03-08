@@ -1,39 +1,24 @@
-import { useEffect, useState } from "react";
-import { readContract } from "@wagmi/core";
-import { pokemonFactory } from "@/constants/abi/pokemonFactory";
+import { pokemonFactory } from '@/constants/abi/pokemonFactory'
+import { useAccount, useReadContract } from 'wagmi'
 
-export const useTokenURIByTokenId = (tokenId?: `0x${string}` | number) => {
-  const [tokenURILoading, setTokenURILoading] = useState(false);
-  const [tokenURIError, setTokenURIError] = useState();
-  const [tokenURI, setTokenURI] = useState<string>();
+export const useTokenURIByTokenId = (tokenId?: number) => {
+  const bigTokenId = tokenId ? BigInt(tokenId) : undefined
+  const { chainId } = useAccount()
 
-  useEffect(() => {
-    if (!tokenId) {
-      return;
-    }
-    setTokenURIError(undefined);
-    setTokenURI(undefined);
-    setTokenURILoading(true);
+  const {
+    data: tokenURI,
+    error: tokenURIError,
+    isLoading: tokenURILoading,
+  } = useReadContract({
+    abi: pokemonFactory.abi,
+    address: pokemonFactory.address,
+    args: [bigTokenId as bigint],
+    chainId,
+    functionName: 'uri',
+    query: {
+      enabled: !!tokenId,
+    },
+  })
 
-    const bigTokenId = BigInt(tokenId);
-
-    readContract({
-      address: pokemonFactory.address,
-      abi: pokemonFactory.abi,
-      functionName: "uri",
-      args: [bigTokenId],
-    })
-      .then((result) => {
-        setTokenURI(result);
-      })
-      .catch((error) => {
-        console.log("Error", error);
-        setTokenURIError(error);
-      })
-      .finally(() => {
-        setTokenURILoading(false);
-      });
-  }, [tokenId]);
-
-  return { tokenURI, tokenURILoading, tokenURIError };
-};
+  return { tokenURI, tokenURILoading, tokenURIError: tokenURIError?.message }
+}

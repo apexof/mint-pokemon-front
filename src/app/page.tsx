@@ -1,40 +1,41 @@
-"use client";
+'use client'
 
-import { usePokemonByTokenId } from "@/hooks/usePokemonByTokenId";
-import { useMint } from "@/hooks/useMint";
-import Image from "next/image";
-import loaderIcon from "@/assets/loader.svg";
-import { Button } from "@/components/Button/Button";
-import { ConnectBtnWrap } from "@/components/ConnectBtnWrap";
-import { sepolia, useChainId, useWaitForTransaction } from "wagmi";
-import unknownPokemonImg from "@/assets/unknownPokemon.png";
-import { pokemonFactory } from "@/constants/abi/pokemonFactory";
-import s from "./home.module.scss";
+import { usePokemonByTokenId } from '@/hooks/usePokemonByTokenId'
+import { useMint } from '@/hooks/useMint'
+import Image from 'next/image'
+import loaderIcon from '@/assets/loader.svg'
+import { Button } from '@/components/Button/Button'
+import { ConnectBtnWrap } from '@/components/ConnectBtnWrap'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
+import unknownPokemonImg from '@/assets/unknownPokemon.png'
+import { pokemonFactory } from '@/constants/abi/pokemonFactory'
+import s from './home.module.scss'
+import { sepolia } from 'viem/chains'
 
 function Home() {
-  const { txHashError, mint, txHashLoading, txHash } = useMint();
-  const chainId = useChainId()
+  const { txHashError, mint, txHashLoading, txHash } = useMint()
+  const { chainId } = useAccount()
   // wait tx
   const {
     data: mintTx,
     error: mintError,
     isLoading: mintLoading,
-  } = useWaitForTransaction({
+  } = useWaitForTransactionReceipt({
     hash: txHash,
-    chainId, 
-  });
-  const data = mintTx?.logs[0].data;
-  const tokenIdHash = data?.slice(2, 66);
-  const tokenId = tokenIdHash ? parseInt(tokenIdHash, 16) : undefined;
-  const { pokemonLoading, pokemonError, pokemon } = usePokemonByTokenId(tokenId);
+    chainId,
+  })
+  const data = mintTx?.logs[0].data
+  const tokenIdHash = data?.slice(2, 66)
+  const tokenId = tokenIdHash ? parseInt(tokenIdHash, 16) : undefined
+  const { pokemonLoading, pokemonError, pokemon } = usePokemonByTokenId(tokenId)
 
-  const isLoading = mintLoading || pokemonLoading || txHashLoading;
-  const error = mintError?.message || pokemonError || txHashError;
+  const isLoading = mintLoading || pokemonLoading || txHashLoading
+  const error = mintError?.message || pokemonError || txHashError
   return (
     <main className={s.homePage}>
-      {isLoading ? 
-        <Image width={275} height={275} src={loaderIcon} alt="" /> :
-      pokemon ? (
+      {isLoading ? (
+        <Image width={275} height={275} src={loaderIcon} alt="" />
+      ) : pokemon ? (
         <Image width={475} height={475} src={pokemon?.image} alt="" />
       ) : (
         <Image width={700} src={unknownPokemonImg} alt="" />
@@ -47,10 +48,7 @@ function Home() {
         <div className={s.error}>{error}</div>
       ) : pokemon ? (
         <>
-          <a
-            target="_blank"
-            href={`https://testnets.opensea.io/assets/sepolia/${pokemonFactory.address}/${tokenId}`}
-          >
+          <a target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${pokemonFactory.address}/${tokenId}`}>
             View on OpenSea
           </a>
         </>
@@ -68,18 +66,18 @@ function Home() {
       <ConnectBtnWrap targetChain={sepolia}>
         <Button isLoading={isLoading} onClick={mint}>
           {txHashLoading
-            ? "Proceed In Your Wallet"
+            ? 'Proceed In Your Wallet'
             : mintLoading
-            ? "Minting"
-            : pokemonLoading
-            ? "Getting Pokemon Image"
-            : pokemon
-            ? "Mint Again"
-            : "Mint"}
+              ? 'Minting'
+              : pokemonLoading
+                ? 'Getting Pokemon Image'
+                : pokemon
+                  ? 'Mint Again'
+                  : 'Mint'}
         </Button>
       </ConnectBtnWrap>
     </main>
-  );
+  )
 }
 
-export default Home;
+export default Home

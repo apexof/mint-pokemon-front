@@ -1,43 +1,28 @@
-"use client";
+'use client'
 
-import React, { useEffect } from "react";
-import {
-  RainbowKitProvider,
-  getDefaultWallets,
-  connectorsForWallets,
-} from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
-import { polygon, sepolia } from "wagmi/chains";
+import { FC, PropsWithChildren } from 'react'
 
-const { chains, publicClient } = configureChains(
-  [polygon, sepolia],
-  [publicProvider()]
-);
+import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider } from 'wagmi'
+import '@rainbow-me/rainbowkit/styles.css'
+import { sepolia } from 'viem/chains'
 
-const { wallets } = getDefaultWallets({
-  appName: "pokemon-NFT",
+const config = getDefaultConfig({
+  appName: 'Pokemon Mint',
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_ID as string,
-  chains,
-});
+  chains: [sepolia],
+  ssr: true,
+})
 
-const connectors = connectorsForWallets(wallets);
+const queryClient = new QueryClient()
 
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
-
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = React.useState(false);
-  useEffect(() => setMounted(true), []);
-
+export const Web3Provider: FC<PropsWithChildren> = (props) => {
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        {mounted && children}
-      </RainbowKitProvider>
-    </WagmiConfig>
-  );
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>{props.children}</RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
 }
