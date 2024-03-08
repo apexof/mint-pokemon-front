@@ -37,7 +37,10 @@ function Home() {
       {isLoading ? (
         <Image width={275} height={275} src={loaderIcon} alt="" />
       ) : pokemon ? (
-        <Image width={475} height={475} src={pokemon.image} alt="" />
+        <>
+          <p className={s.name}>{pokemon.name}</p>
+          <Image width={475} height={475} src={pokemon.image} alt="" />
+        </>
       ) : (
         <Image width={700} src={unknownPokemonImg} alt="" />
       )}
