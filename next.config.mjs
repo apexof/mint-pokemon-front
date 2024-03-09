@@ -1,21 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    return {
-      ...config,
-      externals: [...config.externals, "pino-pretty", "lokijs", "encoding"],
-    };
-  },
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "raw.githubusercontent.com",
-        port: "",
-        pathname: "/apexof/pokemons/main/images/**",
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/apexof/pokemons/main/images/**',
+        port: '',
+        protocol: 'https',
       },
     ],
   },
-};
+  webpack: (config) => {
+    return {
+      ...config,
+      externals: [...config.externals, 'pino-pretty', 'lokijs', 'encoding'],
+    }
+  },
+}
 
-export default nextConfig;
+export default nextConfig
