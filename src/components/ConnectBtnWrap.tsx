@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ButtonProps } from './Button/Button'
+import { SUPPORTED_CHAINS_IDS } from '@/app/providers/Web3Provider'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Chain } from 'viem'
 import { useSwitchChain } from 'wagmi'
@@ -28,7 +29,7 @@ export const ConnectBtnWrap: FC<Props> = (props) => {
               if (isPending) {
                 return <Button isLoading />
               }
-              if (chain.id !== targetChain.id) {
+              if (!SUPPORTED_CHAINS_IDS.includes(chain.id)) {
                 return (
                   <Button onClick={() => switchChain({ chainId: targetChain.id })}>Switch to {targetChain.name}</Button>
                 )

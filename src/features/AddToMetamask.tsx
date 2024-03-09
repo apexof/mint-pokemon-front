@@ -7,14 +7,14 @@ import metamaskIcon from '../assets/metamask.svg'
 import s from './addToMetamask.module.scss'
 
 type Props = {
-  address: string
+  address?: string
   tokenId?: string
 }
 
 export const AddToMetaMask: FC<Props> = (props) => {
   const { address, tokenId } = props
 
-  if (!tokenId) {
+  if (!tokenId || !address) {
     return null
   }
 

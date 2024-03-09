@@ -1,18 +1,23 @@
 import { useCallback } from 'react'
 
-import { pokemonFactory } from '@/constants/abi/pokemonFactory'
+import { pokemonAbi } from '@/constants/abi/pokemonFactory'
+import { usePokemonAddress } from '@/entities/Pokemon/hooks/usePokemonAddress'
 import { useWriteContract } from 'wagmi'
 
 export const useMint = () => {
   const { data: txHash, error: txHashError, isPending: txHashLoading, writeContract } = useWriteContract()
+  const pokemonContractAddress = usePokemonAddress()
 
   const mint = useCallback(async () => {
+    if (!pokemonContractAddress) {
+      return
+    }
     writeContract({
-      abi: pokemonFactory.abi,
-      address: pokemonFactory.address,
+      abi: pokemonAbi,
+      address: pokemonContractAddress,
       functionName: 'mint',
     })
-  }, [writeContract])
+  }, [writeContract, pokemonContractAddress])
 
   return {
     mint,

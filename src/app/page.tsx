@@ -4,8 +4,9 @@ import loaderIcon from '@/assets/loader.svg'
 import unknownPokemonImg from '@/assets/unknownPokemon.png'
 import { Button } from '@/components/Button/Button'
 import { ConnectBtnWrap } from '@/components/ConnectBtnWrap'
-import { pokemonFactory } from '@/constants/abi/pokemonFactory'
+import { usePokemonAddress } from '@/entities/Pokemon/hooks/usePokemonAddress'
 import { AddToMetaMask } from '@/features/AddToMetamask'
+import { useOpenSeaLink } from '@/features/openSea/hooks/useOpenSeaLink'
 import { useMint } from '@/hooks/useMint'
 import { usePokemonByTokenId } from '@/hooks/usePokemonByTokenId'
 import Image from 'next/image'
@@ -17,6 +18,8 @@ import s from './home.module.scss'
 function Home() {
   const { mint, txHash, txHashError, txHashLoading } = useMint()
   const { chainId } = useAccount()
+  const pokemonContractAddress = usePokemonAddress()
+
   // wait tx
   const {
     data: mintTx,
@@ -33,6 +36,7 @@ function Home() {
 
   const isLoading = mintLoading || pokemonLoading || txHashLoading
   const error = mintError?.message || pokemonError || txHashError
+  const openSeaLink = useOpenSeaLink(pokemonContractAddress, tokenId)
 
   return (
     <main className={s.homePage}>
@@ -54,15 +58,10 @@ function Home() {
         <div className={s.error}>{error}</div>
       ) : pokemon ? (
         <>
-          <a
-            className={s.text}
-            href={`https://testnets.opensea.io/assets/sepolia/${pokemonFactory.address}/${tokenId}`}
-            rel="noreferrer"
-            target="_blank"
-          >
+          <a className={s.text} href={openSeaLink} rel="noreferrer" target="_blank">
             View on OpenSea
           </a>
-          <AddToMetaMask address={pokemonFactory.address} tokenId={tokenId?.toString()} />
+          <AddToMetaMask address={pokemonContractAddress} tokenId={tokenId?.toString()} />
         </>
       ) : (
         <p className={s.text}>Mint free Pokemon NFT!</p>
