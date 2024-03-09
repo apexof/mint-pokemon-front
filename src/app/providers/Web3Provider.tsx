@@ -2,15 +2,12 @@
 
 import { FC, PropsWithChildren } from 'react'
 
+import { SUPPORTED_CHAINS } from '@/entities/Chain/const/supportedChains'
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Chain, polygonMumbai, sepolia } from 'viem/chains'
 import { WagmiProvider } from 'wagmi'
 
 import '@rainbow-me/rainbowkit/styles.css'
-
-const SUPPORTED_CHAINS: [Chain, ...Chain[]] = [sepolia, polygonMumbai]
-export const SUPPORTED_CHAINS_IDS = SUPPORTED_CHAINS.map((ch) => ch.id)
 
 const config = getDefaultConfig({
   appName: 'Pokemon Mint',

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ButtonProps } from './Button/Button'
-import { SUPPORTED_CHAINS_IDS } from '@/app/providers/Web3Provider'
+import { SUPPORTED_CHAINS_IDS } from '@/entities/Chain/const/supportedChains'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Chain } from 'viem'
 import { useSwitchChain } from 'wagmi'
