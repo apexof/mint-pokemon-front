@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: 'Work Sans', sans-serif;
+}
 body {
   width: 100vw;
   height: 100vh;
@@ -9,4 +12,16 @@ body {
 
 div[data-rk] {
   height: -webkit-fill-available;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
 }
