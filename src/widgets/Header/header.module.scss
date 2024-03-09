@@ -1,8 +1,20 @@
-.link {
-  font-size: 28px;
-  color: rgb(70, 70, 70);
-  font-weight: 500;
-  &:hover {
-    color: black;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  .list {
+    align-items: center;
+    display: flex;
+    gap: 24px;
+  }
+
+  .link {
+    font-size: 28px;
+    color: rgb(70, 70, 70);
+    font-weight: 500;
+    &:hover {
+      color: black;
+    }
   }
 }

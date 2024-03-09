@@ -7,9 +7,9 @@ import s from './header.module.scss'
 
 export const Header: FC = () => {
   return (
-    <div className="flex items-center justify-between py-4 px-6">
+    <div className={s.header}>
       <nav>
-        <ul className="flex items-center gap-6">
+        <ul className={s.list}>
           <li>
             <Link className={s.link} href="/">
               Mint
