@@ -15,6 +15,7 @@ div[data-rk] {
 }
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover {
   text-decoration: underline;

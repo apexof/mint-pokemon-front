@@ -2,7 +2,7 @@ import { ChainId } from '@/entities/Chain/const/supportedChains'
 import { polygon, polygonMumbai, sepolia } from 'viem/chains'
 
 export const pokemonContractAddressByChainId: Record<ChainId, `0x${string}`> = {
-  [polygon.id]: '0x8D053860a12B57CdC78A33A0a69B59b21CEEFD2f',
-  [polygonMumbai.id]: '0x2aC3d5E409272f4D6917ae15cA24Af8a606ecEB0',
-  [sepolia.id]: '0x53963f3da917dFD4eF654B7Ace7Cef88753ae3A6',
+  [polygon.id]: '0xAD90C7F05FEEbFc7D6C733C71cA91D0659c258CF',
+  [polygonMumbai.id]: '0xC43a4c45a660B761cE0a926532589F2b27DC688E',
+  [sepolia.id]: '0x78Fb3DE034CbDF746e5e101a9C994321BCD4D25A',
 }
