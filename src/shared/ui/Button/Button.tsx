@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
 
-import loaderIcon from '@/assets/loader.svg'
+import loaderIcon from '@/shared/assets/loader.svg'
 import Image from 'next/image'
 
 import s from './button.module.scss'

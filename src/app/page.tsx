@@ -1,14 +1,15 @@
 'use client'
 
-import loaderIcon from '@/assets/loader.svg'
-import unknownPokemonImg from '@/assets/unknownPokemon.png'
-import { Button } from '@/components/Button/Button'
-import { ConnectBtnWrap } from '@/components/ConnectBtnWrap'
+import { useMint } from '@/entities/ERC-1155/hooks/useMint'
+import { getTokenIdFromTx } from '@/entities/ERC-1155/utils/getTokenIdFromTx'
+import unknownPokemonImg from '@/entities/Pokemon/assets/unknownPokemon.png'
 import { usePokemonAddress } from '@/entities/Pokemon/hooks/usePokemonAddress'
-import { AddToMetaMask } from '@/features/AddToMetamask'
-import { useOpenSeaLink } from '@/features/openSea/hooks/useOpenSeaLink'
-import { useMint } from '@/hooks/useMint'
-import { usePokemonByTokenId } from '@/hooks/usePokemonByTokenId'
+import { usePokemonByTokenId } from '@/entities/Pokemon/hooks/usePokemonByTokenId'
+import { AddToMetaMask } from '@/features/AddToMetamask/AddToMetamask'
+import { ConnectBtnWrap } from '@/features/ConnectBtnWrap/ConnectBtnWrap'
+import { useOpenSeaLink } from '@/features/OpenSea/hooks/useOpenSeaLink'
+import loaderIcon from '@/shared/assets/loader.svg'
+import { Button } from '@/shared/ui/Button/Button'
 import Image from 'next/image'
 import { sepolia } from 'viem/chains'
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
@@ -16,26 +17,17 @@ import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 import s from './home.module.scss'
 
 function Home() {
-  const { mint, txHash, txHashError, txHashLoading } = useMint()
   const { chainId } = useAccount()
   const pokemonContractAddress = usePokemonAddress()
+  const { mint, txHash, txHashError, txHashLoading } = useMint(pokemonContractAddress)
 
   // wait tx
-  const {
-    data: mintTx,
-    error: mintError,
-    isLoading: mintLoading,
-  } = useWaitForTransactionReceipt({
-    chainId,
-    hash: txHash,
-  })
-  const data = mintTx?.logs[0].data
-  const tokenIdHash = data?.slice(2, 66)
-  const tokenId = tokenIdHash ? parseInt(tokenIdHash, 16) : undefined
+  const { data: tx, error: txError, isLoading: txLoading } = useWaitForTransactionReceipt({ chainId, hash: txHash })
+  const tokenId = getTokenIdFromTx(tx)
   const { pokemon, pokemonError, pokemonLoading } = usePokemonByTokenId(tokenId)
 
-  const isLoading = mintLoading || pokemonLoading || txHashLoading
-  const error = mintError?.message || pokemonError || txHashError
+  const isLoading = txLoading || pokemonLoading || txHashLoading
+  const error = txError?.message || pokemonError || txHashError
   const openSeaLink = useOpenSeaLink(pokemonContractAddress, tokenId)
 
   return (
@@ -71,7 +63,7 @@ function Home() {
         <Button isLoading={isLoading} onClick={mint}>
           {txHashLoading
             ? 'Proceed In Your Wallet'
-            : mintLoading
+            : txLoading
               ? 'Minting'
               : pokemonLoading
                 ? 'Getting Pokemon Image'

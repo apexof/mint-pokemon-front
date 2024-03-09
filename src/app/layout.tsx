@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 
 import { Web3Provider } from './providers/Web3Provider'
-import { Header } from '@/components/Header/Header'
+import { Header } from '@/widgets/Header/Header'
 
 import './globals.css'
 import s from './layout.module.scss'

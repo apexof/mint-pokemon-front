@@ -1,8 +1,7 @@
 import { FC, MouseEventHandler } from 'react'
 
+import metamaskIcon from './metamask.svg'
 import Image from 'next/image'
-
-import metamaskIcon from '../assets/metamask.svg'
 
 import s from './addToMetamask.module.scss'
 

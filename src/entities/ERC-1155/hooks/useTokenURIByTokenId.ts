@@ -1,4 +1,4 @@
-import { pokemonAbi } from '@/constants/abi/pokemonFactory'
+import { pokemonAbi } from '@/entities/Pokemon/const/pokemonAbi'
 import { usePokemonAddress } from '@/entities/Pokemon/hooks/usePokemonAddress'
 import { useAccount, useReadContract } from 'wagmi'
 

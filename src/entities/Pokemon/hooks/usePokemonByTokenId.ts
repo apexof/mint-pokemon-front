@@ -1,5 +1,6 @@
 import { usePokemonByTokenURI } from './usePokemonByTokenURI'
-import { useTokenURIByTokenId } from './useTokenURIByTokenId'
+
+import { useTokenURIByTokenId } from '../../ERC-1155/hooks/useTokenURIByTokenId'
 
 export const usePokemonByTokenId = (tokenId?: number) => {
   const { tokenURI, tokenURIError, tokenURILoading } = useTokenURIByTokenId(tokenId)

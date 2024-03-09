@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Pokemon } from '@/types/pokemon'
+import { Pokemon } from '@/entities/Pokemon/types/pokemon'
 
 export const usePokemonByTokenURI = (tokenURI?: string) => {
   const [pokemonLoading, setPokemonLoading] = useState(false)
