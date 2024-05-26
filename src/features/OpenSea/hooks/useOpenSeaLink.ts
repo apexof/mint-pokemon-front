@@ -1,10 +1,11 @@
+import { ChainId } from '@/entities/Chain'
 import { useAccount } from 'wagmi'
 
 import { OPEN_SEA_CHAIN_NAME } from '../const/openSeaChainName'
 
 export const useOpenSeaLink = (collection?: `0x${string}`, id?: number) => {
   const { chain, chainId } = useAccount()
-  const openSeaChainName = chainId ? OPEN_SEA_CHAIN_NAME[chainId] : undefined
+  const openSeaChainName = chainId ? OPEN_SEA_CHAIN_NAME[chainId as ChainId] : undefined
   const isTestNet = chain?.testnet
   const testNetPrefix = isTestNet ? 'testnets.' : ''
 
