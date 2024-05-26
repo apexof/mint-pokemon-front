@@ -1,7 +1,11 @@
+'use client'
+
 import { FC } from 'react'
 
+import { PokemonList } from '@/widgets/PokemonList'
+
 const Collection: FC = () => {
-  return <div>Collection</div>
+  return <PokemonList />
 }
 
 export default Collection

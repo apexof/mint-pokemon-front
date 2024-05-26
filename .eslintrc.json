@@ -37,6 +37,7 @@
     "React": "readonly"
   },
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
     // "no-console": ["error", { "allow": ["debug", "warn", "error"] }],
     "newline-before-return": "error",
     "no-useless-catch": "off",

@@ -1,0 +1,15 @@
+.pokemonCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #2551a2;
+  padding: 16px;
+  border-radius: 16px;
+  .name {
+    font-size: 36px;
+    color: #2551a2;
+    font-weight: 600;
+  }
+}

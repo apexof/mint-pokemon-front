@@ -1,7 +1,9 @@
+'use client'
+
 import { FC } from 'react'
 
+import { NavLink } from '@/shared/ui'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import Link from 'next/link'
 
 import s from './header.module.scss'
 
@@ -11,14 +13,14 @@ export const Header: FC = () => {
       <nav>
         <ul className={s.list}>
           <li>
-            <Link className={s.link} href="/">
+            <NavLink className={s.link} href="/">
               Mint
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link className={s.link} href="/collection">
+            <NavLink className={s.link} href="/collection">
               Your Collection
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

@@ -8,6 +8,7 @@ import { usePokemonByTokenId } from '@/entities/Pokemon/hooks/usePokemonByTokenI
 import { AddToMetaMask } from '@/features/AddToMetamask/AddToMetamask'
 import { ConnectBtnWrap } from '@/features/ConnectBtnWrap/ConnectBtnWrap'
 import { useOpenSeaLink } from '@/features/OpenSea/hooks/useOpenSeaLink'
+import { PokemonCard } from '@/features/PokemonCard'
 import loaderIcon from '@/shared/assets/loader.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import Image from 'next/image'
@@ -35,10 +36,7 @@ function Home() {
       {isLoading ? (
         <Image alt="" height={275} src={loaderIcon} width={275} />
       ) : pokemon ? (
-        <>
-          <p className={s.name}>{pokemon.name}</p>
-          <Image alt="" height={475} src={pokemon.image} width={475} />
-        </>
+        <PokemonCard pokemon={pokemon} />
       ) : (
         <Image alt="" src={unknownPokemonImg} width={700} />
       )}
